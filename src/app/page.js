@@ -6,32 +6,34 @@ import WelderCard from "./components/WelderCard";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const basePath = process.env.NODE_ENV === "production" ? "/welderfind" : "";
+
   const welders = [
     {
       id: 1,
       name: "Jenny Kim",
-      image: "/welderfind/images/welder1.png", // Add basePath
+      image: `${basePath}/images/welder1.png`,
       hourlyRate: "$150/hr",
       city: "New York",
     },
     {
       id: 2,
       name: "Jack Smith",
-      image: "/welderfind/images/welder2.png", // Add basePath
+      image: `${basePath}/images/welder2.png`,
       hourlyRate: "$45/hr",
       city: "Los Angeles",
     },
     {
       id: 3,
       name: "Mike Johnson",
-      image: "/welderfind/images/welder3.png", // Add basePath
+      image: `${basePath}/images/welder3.png`,
       hourlyRate: "$55/hr",
       city: "Chicago",
     },
     {
       id: 4,
       name: "Mike Johnson",
-      image: "/welderfind/images/welder4.png", // Add basePath
+      image: `${basePath}/images/welder4.png`,
       hourlyRate: "$125/hr",
       city: "Chicago",
     },
