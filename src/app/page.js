@@ -6,38 +6,36 @@ import WelderCard from "./components/WelderCard";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-
   const welders = [
     {
       id: 1,
       name: "Jenny Kim",
-      image: "/images/welder1.png",
+      image: "/welderfind/images/welder1.png", // Add basePath
       hourlyRate: "$150/hr",
       city: "New York",
     },
     {
       id: 2,
       name: "Jack Smith",
-      image: "/images/welder2.png",
+      image: "/welderfind/images/welder2.png", // Add basePath
       hourlyRate: "$45/hr",
       city: "Los Angeles",
     },
     {
       id: 3,
       name: "Mike Johnson",
-      image: "/images/welder3.png",
+      image: "/welderfind/images/welder3.png", // Add basePath
       hourlyRate: "$55/hr",
       city: "Chicago",
     },
     {
       id: 4,
       name: "Mike Johnson",
-      image: "/images/welder4.png",
+      image: "/welderfind/images/welder4.png", // Add basePath
       hourlyRate: "$125/hr",
       city: "Chicago",
     },
   ];
-
   const filteredWelders = welders.filter(
     (welder) =>
       welder.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
