@@ -7,6 +7,8 @@ const welders = [
     image: `${basePath}/images/welder1.png`,
     hourlyRate: "$150/hr",
     city: "New York",
+    skills: ["TIG", "MIG", "STICK"],
+    expertise: ["Automotive", "Fabrication"],
   },
   {
     id: 2,
@@ -14,6 +16,8 @@ const welders = [
     image: `${basePath}/images/welder2.png`,
     hourlyRate: "$45/hr",
     city: "Los Angeles",
+    skills: ["MIG", "FLUX-CORE"],
+    expertise: ["Commercial", "Construction"],
   },
   {
     id: 3,
@@ -21,6 +25,8 @@ const welders = [
     image: `${basePath}/images/welder3.png`,
     hourlyRate: "$55/hr",
     city: "Chicago",
+    skills: ["TIG", "STICK"],
+    expertise: ["Industrial", "Fabrication"],
   },
   {
     id: 4,
@@ -28,6 +34,8 @@ const welders = [
     image: `${basePath}/images/welder4.png`,
     hourlyRate: "$125/hr",
     city: "Houston",
+    skills: ["MIG", "FLUX-CORE", "STICK"],
+    expertise: ["Construction", "Automotive"],
   },
   {
     id: 5,
@@ -35,6 +43,8 @@ const welders = [
     image: `${basePath}/images/welder5.png`,
     hourlyRate: "$70/hr",
     city: "Phoenix",
+    skills: ["TIG", "MIG"],
+    expertise: ["Fabrication", "Commercial"],
   },
   {
     id: 6,
@@ -42,6 +52,8 @@ const welders = [
     image: `${basePath}/images/welder6.png`,
     hourlyRate: "$90/hr",
     city: "Philadelphia",
+    skills: ["STICK", "FLUX-CORE"],
+    expertise: ["Industrial", "Construction"],
   },
   {
     id: 7,
@@ -49,6 +61,8 @@ const welders = [
     image: `${basePath}/images/welder7.png`,
     hourlyRate: "$60/hr",
     city: "San Antonio",
+    skills: ["MIG", "STICK"],
+    expertise: ["Automotive", "Fabrication"],
   },
   {
     id: 8,
@@ -56,6 +70,8 @@ const welders = [
     image: `${basePath}/images/welder8.png`,
     hourlyRate: "$80/hr",
     city: "San Diego",
+    skills: ["TIG", "MIG", "FLUX-CORE"],
+    expertise: ["Commercial", "Industrial"],
   },
   {
     id: 9,
@@ -63,6 +79,8 @@ const welders = [
     image: `${basePath}/images/welder9.png`,
     hourlyRate: "$100/hr",
     city: "Dallas",
+    skills: ["TIG", "STICK"],
+    expertise: ["Fabrication", "Construction"],
   },
   {
     id: 10,
@@ -70,6 +88,8 @@ const welders = [
     image: `${basePath}/images/welder10.png`,
     hourlyRate: "$110/hr",
     city: "San Jose",
+    skills: ["MIG", "FLUX-CORE"],
+    expertise: ["Automotive", "Commercial"],
   },
   {
     id: 11,
@@ -77,6 +97,8 @@ const welders = [
     image: `${basePath}/images/welder11.png`,
     hourlyRate: "$95/hr",
     city: "Austin",
+    skills: ["TIG", "MIG", "STICK"],
+    expertise: ["Industrial", "Construction"],
   },
 ];
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import welders from "../data/welders";
 
 export default function Home() {
@@ -32,19 +33,18 @@ export default function Home() {
 
       <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredWelders.map((welder) => (
-          <div
-            key={welder.id}
-            className="border rounded-lg shadow-md p-4 flex flex-col items-center"
-          >
-            <img
-              src={welder.image}
-              alt={welder.name}
-              className="rounded-full w-32 h-32"
-            />
-            <h2 className="text-xl font-semibold mt-4">{welder.name}</h2>
-            <p className="text-gray-600">{welder.city}</p>
-            <p className="text-green-600 font-bold">{welder.hourlyRate}</p>
-          </div>
+          <Link key={welder.id} href={`/welders/${welder.id}`}>
+            <div className="border rounded-lg shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-lg transition-shadow">
+              <img
+                src={welder.image}
+                alt={welder.name}
+                className="rounded-2xl w-32 h-32"
+              />
+              <h2 className="text-xl font-semibold mt-4">{welder.name}</h2>
+              <p className="text-gray-600">{welder.city}</p>
+              <p className="text-green-600 font-bold">{welder.hourlyRate}</p>
+            </div>
+          </Link>
         ))}
       </main>
     </div>
