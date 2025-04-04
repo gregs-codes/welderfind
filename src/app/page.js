@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import welders from "../data/welders";
 
 export default function Home() {
@@ -35,10 +36,12 @@ export default function Home() {
         {filteredWelders.map((welder) => (
           <Link key={welder.id} href={`/welders/${welder.id}`}>
             <div className="border rounded-lg shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-lg transition-shadow">
-              <img
+              <Image
                 src={welder.image}
                 alt={welder.name}
-                className="rounded-2xl w-32 h-32"
+                width={128} // Example width (adjust as needed)
+                height={128} // Example height (adjust as needed)
+                className="rounded-2xl"
               />
               <h2 className="text-xl font-semibold mt-4">{welder.name}</h2>
               <p className="text-gray-600">{welder.city}</p>
