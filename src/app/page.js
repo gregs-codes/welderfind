@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Header from "./components/Header";
 import welders from "../data/welders";
 
 export default function Home() {
@@ -16,12 +17,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-8 sm:p-20 font-sans">
-      <header className="text-center mb-12">
-        <h1 className="text-4xl font-bold">Find Welders in Your Area</h1>
-        <p className="text-lg text-gray-600 mt-4">
-          Browse through our list of professional welders near you.
-        </p>
-        <div className="mt-6">
+        <Header 
+        title="Find Welders in Your Area"
+        description="Browse through our list of professional welders near you."
+      />
+
+        <div className="text-center mb-12">
           <input
             type="text"
             placeholder="Search by name or city"
@@ -30,7 +31,7 @@ export default function Home() {
             className="border rounded-lg p-2 w-full sm:w-1/2"
           />
         </div>
-      </header>
+
 
       <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredWelders.map((welder) => (

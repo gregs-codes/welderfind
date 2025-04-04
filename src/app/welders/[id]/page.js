@@ -1,8 +1,8 @@
 import welders from "../../../data/welders";
-import WelderDetails from "@/app/components/WelderDetails";
+import WelderDetails from "./WelderDetails";
 
-export default function WelderDetailsPage({ params }) {
-  const { id } = params; // Extract the 'id' from the URL
+export default async function WelderDetailsPage({ params }) {
+  const { id } = await params; // Await the params object
 
   // Find the welder by ID
   const welder = welders.find((w) => w.id === parseInt(id));

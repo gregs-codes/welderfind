@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import MessageForm from "./MessageForm";
 
 export default function WelderDetails({ welder }) {
   if (!welder) {
@@ -17,11 +18,13 @@ export default function WelderDetails({ welder }) {
           </button>
         </Link>
       </div>
+
+      {/* Welder Details */}
       <Image
         src={welder.image}
         alt={welder.name}
-        width={192} // Example width (adjust as needed)
-        height={192} // Example height (adjust as needed)
+        width={192}
+        height={192}
         className="rounded-2xl mx-auto"
       />
       <h1 className="text-3xl font-bold text-center mt-4">{welder.name}</h1>
@@ -35,6 +38,9 @@ export default function WelderDetails({ welder }) {
         <h3 className="text-lg font-semibold">Expertise:</h3>
         <p className="text-gray-600">{welder.expertise.join(", ")}</p>
       </div>
+
+      {/* Message Form */}
+      <MessageForm welderName={welder.name} />
     </div>
   );
 }
