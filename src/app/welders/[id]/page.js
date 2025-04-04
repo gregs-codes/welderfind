@@ -1,7 +1,5 @@
-"use client";
-
 import welders from "../../../data/welders";
-import WelderDetails from "../../../components/WelderDetails";
+import WelderDetails from "@/app/components/WelderDetails";
 
 export default function WelderDetailsPage({ params }) {
   const { id } = params; // Extract the 'id' from the URL
@@ -18,4 +16,12 @@ export default function WelderDetailsPage({ params }) {
       <WelderDetails welder={welder} />
     </div>
   );
+}
+
+// Required for static export
+export async function generateStaticParams() {
+  // Generate an array of all possible `id` values
+  return welders.map((welder) => ({
+    id: welder.id.toString(),
+  }));
 }
