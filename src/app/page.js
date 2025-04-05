@@ -16,7 +16,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen p-8 sm:p-20 font-sans">
+    <div className="min-h-screen pt-0 p-8 sm:p-20 font-sans">
         <Header 
         title="Find Welders in Your Area"
         description="Browse through our list of professional welders near you."
