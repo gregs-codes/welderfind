@@ -5,6 +5,7 @@ import Link from "next/link";
 export default function WelderCard({ welder }) {
   return (
     <div>
+        
         <Link key={welder.id} href={`/welders/${welder.id}`}>
             <div className="border rounded-lg shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-lg transition-shadow">
             <Image

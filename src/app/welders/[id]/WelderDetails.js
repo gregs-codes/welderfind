@@ -9,7 +9,7 @@ export default function WelderDetails({ welder }) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto border rounded-lg shadow-md p-8">
+    <div className="max-w-2xl mx-auto rounded-lg p-8">
       {/* Go Back Button */}
       <div className="mb-8">
         <Link href="/">
@@ -23,8 +23,8 @@ export default function WelderDetails({ welder }) {
       <Image
         src={welder.image}
         alt={welder.name}
-        width={192}
-        height={192}
+        width={228}
+        height={228}
         className="rounded-2xl mx-auto"
       />
       <h1 className="text-3xl font-bold text-center mt-4">{welder.name}</h1>

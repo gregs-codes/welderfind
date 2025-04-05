@@ -1,5 +1,6 @@
 import welders from "../../../data/welders";
 import WelderDetails from "./WelderDetails";
+import Header from "../../components/Header";
 
 export default async function WelderDetailsPage({ params }) {
   const { id } = await params; // Await the params object
@@ -12,7 +13,14 @@ export default async function WelderDetailsPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen p-8 sm:p-20 font-sans">
+
+    <div className="min-h-screen mt-0 bg-white font-sans">
+      {/* Header Component */}
+      <Header
+        title="Welding Supplies Store"
+        description="Browse our collection of high-quality welding supplies."
+      />
+
       <WelderDetails welder={welder} />
     </div>
   );
