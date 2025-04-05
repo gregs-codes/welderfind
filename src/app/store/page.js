@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "../components/Header";
-
+const basePath = process.env.NODE_ENV === "production" ? "/welderfind" : "";
 export default function Store() {
   const products = [
     {
@@ -9,21 +9,22 @@ export default function Store() {
       name: "Metal Pipe",
       description: "Durable metal pipe for welding projects.",
       price: "$25.00",
-      image: "/images/metal-pipe.jpg", // Replace with actual image path
+      image: `${basePath}/images/metal-pipe.jpg`, // Replace with actual image path
+      
     },
     {
       id: 2,
       name: "Metal Sheet",
       description: "High-quality metal sheet for construction and welding.",
       price: "$40.00",
-      image: "/images/metal-sheet.jpg", // Replace with actual image path
+      image: `${basePath}/images/metal-sheet.jpg`, // Replace with actual image path
     },
     {
       id: 3,
       name: "Welding Rods",
       description: "Premium welding rods for precision welding.",
       price: "$15.00",
-      image: "/images/welding-rods.jpg", // Replace with actual image path
+      image: `${basePath}/images/welding-rods.jpg`, // Replace with actual image path
     },
   ];
 
