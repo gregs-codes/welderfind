@@ -32,7 +32,7 @@ export default function Header({ title, description }) {
         </button>
 
         {/* Logo */}
-        <div className="text-2xl font-bold">
+        <div className="text-2xl font-bold font-black text-gray-700">
           <Link href="/">WelderFind</Link>
         </div>
 

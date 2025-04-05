@@ -31,11 +31,11 @@ export default function WelderDetails({ welder }) {
       <p className="text-center text-gray-600">{welder.city}</p>
       <p className="text-center text-green-600 font-bold">{welder.hourlyRate}</p>
       <div className="mt-4">
-        <h3 className="text-lg font-semibold">Skills:</h3>
+        <h3 className="text-lg text-gray-600 font-semibold">Skills:</h3>
         <p className="text-gray-600">{welder.skills.join(", ")}</p>
       </div>
       <div className="mt-4">
-        <h3 className="text-lg font-semibold">Expertise:</h3>
+        <h3 className="text-lg text-gray-600 font-semibold">Expertise:</h3>
         <p className="text-gray-600">{welder.expertise.join(", ")}</p>
       </div>
 
