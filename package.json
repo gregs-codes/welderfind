@@ -10,8 +10,9 @@
     "deploy": "npm run build && gh-pages -d out"
   },
   "dependencies": {
+    "@ekaruz/react-social-auth": "^0.0.4",
+    "mysql2": "^3.14.0",
     "next": "15.2.4",
-    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "../components/Header";
+import Image from "next/image";
 const basePath = process.env.NODE_ENV === "production" ? "/welderfind" : "";
 export default function Store() {
   const products = [
@@ -45,11 +46,15 @@ export default function Store() {
               key={product.id}
               className="border rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
             >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
+                            <Image
+                                className="w-full h-48 object-cover rounded-md mb-4"
+                                src={product.image}
+                                alt={product.name}
+                                height={48} // Example height (adjust as needed)
+                                width={48} // Example width (adjust as needed)
+
+                            />
+  
               <h3 className="text-xl text-gray-600 font-semibold mb-2">
                 {product.name}
               </h3>
