@@ -1,40 +1,51 @@
 "use client";
 
 import { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import Header from "../components/Header";
 
 export default function RegisterOrLogin() {
-  const [isRegister, setIsRegister] = useState(true); // Toggle between Register and Login
+  const [isRegister, setIsRegister] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    role: "user",
   });
 
-  const [success, setSuccess] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/oauth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ credential: credentialResponse.credential }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log("Google Login Successful:", data);
+        localStorage.setItem("token", data.token);
+        window.location.href = "/dashboard";
+      } else {
+        console.error("Google Login Error:", data.error);
+        alert(data.error || "An error occurred during login.");
+      }
+    } catch (error) {
+      console.error("Error during Google Login:", error);
+      alert("An unexpected error occurred. Please try again.");
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isRegister) {
-      console.log("User registered:", formData);
-    } else {
-      console.log("User logged in:", formData);
-    }
-    setSuccess(true);
-    setFormData({ name: "", email: "", password: "" });
+  const handleGoogleLoginError = () => {
+    console.error("Google Login Failed");
+    alert("Google Login Failed. Please try again.");
   };
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      {/* Header Component */}
       <Header
         title={isRegister ? "Register as a Customer" : "Login to Your Account"}
         description={
@@ -44,20 +55,24 @@ export default function RegisterOrLogin() {
         }
       />
 
-      {/* Form Container */}
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto border rounded-lg shadow-md p-8">
           <h2 className="text-2xl font-bold text-center mb-6">
             {isRegister ? "Create an Account" : "Log In"}
           </h2>
-          {success && (
-            <p className="text-green-600 mb-4 text-center">
-              {isRegister
-                ? "Registration successful! You can now log in."
-                : "Login successful!"}
-            </p>
-          )}
-          <form onSubmit={handleSubmit}>
+
+          {/* Google Login Button */}
+          <div className="mb-6">
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={handleGoogleLoginError}
+            />
+          </div>
+
+          <p className="text-center text-gray-600 mb-4">or</p>
+
+          {/* Registration/Login Form */}
+          <form>
             {isRegister && (
               <div className="mb-4">
                 <label
@@ -71,7 +86,9 @@ export default function RegisterOrLogin() {
                   id="name"
                   name="name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   required
                   className="mt-1 block w-full border rounded-lg p-2"
                 />
@@ -89,7 +106,9 @@ export default function RegisterOrLogin() {
                 id="email"
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
                 className="mt-1 block w-full border rounded-lg p-2"
               />
@@ -106,7 +125,9 @@ export default function RegisterOrLogin() {
                 id="password"
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 required
                 className="mt-1 block w-full border rounded-lg p-2"
               />
@@ -118,19 +139,6 @@ export default function RegisterOrLogin() {
               {isRegister ? "Register" : "Log In"}
             </button>
           </form>
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
-              {isRegister
-                ? "Already have an account?"
-                : "Don't have an account yet?"}{" "}
-              <button
-                onClick={() => setIsRegister(!isRegister)}
-                className="text-blue-500 hover:underline"
-              >
-                {isRegister ? "Log In" : "Register"}
-              </button>
-            </p>
-          </div>
         </div>
       </div>
     </div>
