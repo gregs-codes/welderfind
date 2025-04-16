@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ekaruz/react-social-auth": "^0.0.4",
+    "@react-oauth/google": "^0.12.1",
     "mysql2": "^3.14.0",
     "next": "15.2.4",
     "react": "^19.0.0",
