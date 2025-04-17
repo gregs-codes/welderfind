@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import Header from "../components/Header";
-
+import { useUser } from "../context/UserContext"; // Adjust the import path as necessary
 export default function RegisterOrLogin() {
   const [isRegister, setIsRegister] = useState(true);
   const [formData, setFormData] = useState({
@@ -13,6 +13,8 @@ export default function RegisterOrLogin() {
     role: "user",
   });
 
+  const { setUser } = useUser(); // Assuming you have a UserContext
+
   const handleGoogleLogin = async (credentialResponse) => {
     try {
       const response = await fetch("http://localhost:5000/api/oauth/google", {
@@ -20,6 +22,7 @@ export default function RegisterOrLogin() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ credential: credentialResponse.credential }),
       });
   
@@ -28,7 +31,9 @@ export default function RegisterOrLogin() {
       if (response.ok) {
         console.log("Google Login Successful:", data);
         localStorage.setItem("token", data.token);
-        window.location.href = "/dashboard";
+        localStorage.setItem("user", JSON.stringify({ name: data.name, picture: data.picture }));
+        setUser({ name: data.name, picture: data.picture }); // Update context
+        window.location.href = "/";
       } else {
         console.error("Google Login Error:", data.error);
         alert(data.error || "An error occurred during login.");

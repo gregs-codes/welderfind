@@ -1,13 +1,15 @@
+"use client";
+
 export default function SearchBar({ searchTerm, setSearchTerm }) {
-    return (
-      <div className="mt-6 text-center mb-6">
-        <input
-          type="text"
-          placeholder="Search by name or city"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border text-gray-600 rounded-lg p-2 w-full sm:w-1/2"
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="mb-4">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)} // Update the search term
+        placeholder="Search welders..."
+        className="w-full border rounded-lg p-2"
+      />
+    </div>
+  );
+}
