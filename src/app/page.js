@@ -17,17 +17,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen pt-0 font-sans">
-        <Header 
+      <Header
         title="Find Welders in Your Area"
         description="Browse through our list of professional welders near you."
       />
 
-      {/* Use the SearchBar Component */}
-      <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      {/* Pass searchTerm and setSearchTerm to SearchBar */}
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-
-
-        <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredWelders.map((welder) => (
           <WelderCard key={welder.id} welder={welder} />
         ))}
