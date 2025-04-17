@@ -1,15 +1,19 @@
 "use client";
 
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    // Load user from localStorage if available
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Load user from localStorage only on the client side
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

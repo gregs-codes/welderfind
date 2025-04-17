@@ -22,7 +22,6 @@ export default function RegisterOrLogin() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({ credential: credentialResponse.credential }),
       });
   
@@ -31,8 +30,8 @@ export default function RegisterOrLogin() {
       if (response.ok) {
         console.log("Google Login Successful:", data);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify({ name: data.name, picture: data.picture }));
-        setUser({ name: data.name, picture: data.picture }); // Update context
+        localStorage.setItem("user", JSON.stringify(data.user)); // Store user data
+        setUser(data.user); // Update context with user data
         window.location.href = "/";
       } else {
         console.error("Google Login Error:", data.error);

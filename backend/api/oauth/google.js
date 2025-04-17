@@ -9,10 +9,7 @@ const router = express.Router(); // Define the router
 router.post("/google", async (req, res) => {
   try {
     const { credential } = req.body;
-    console.log("Incoming OAuth request body:", req.body);
-    console.log("Credential:", credential);
-    // Check if the credential is provided
-    
+
     if (!credential) {
       return res.status(400).json({ error: "Google credential is required" });
     }
@@ -52,7 +49,18 @@ router.post("/google", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ message: "Login successful", token });
+    // Include user data in the response
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        picture: user.picture, // Include picture
+        role: user.role,
+      },
+    });
   } catch (error) {
     console.error("Error in Google OAuth:", error);
     res.status(500).json({ error: "Internal server error" });

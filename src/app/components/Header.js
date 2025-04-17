@@ -3,8 +3,10 @@
 import { useUser } from "../context/UserContext";
 
 export default function Header({ title, description }) {
-  const { user } = useUser();
-
+  const { user, setUser } = useUser();
+  console.log("user picture", user?.picture);
+  console.log("user name", user?.name);
+  console.log("user", user);
   return (
     <header className="bg-blue-500 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
