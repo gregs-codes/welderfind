@@ -45,6 +45,31 @@ app.get("/test", (req, res) => {
   res.send("Test route working!");
 });
 
+// Test database connection route
+const testDbRouter = require("./api/test-db");
+app.get("/api/test-db");
+app.use("/api/test-db", testDbRouter); // Test database connection
+
+// Test routes for API
+app.get("/", (req, res) => {
+  res.send("Welcome to the WelderFind API!");
+});
+app.get("/api", (req, res) => {
+  res.send("Welcome to the WelderFind API!");
+});
+app.get("/api/auth", (req, res) => {
+  res.send("Welcome to the WelderFind API Authentication!");
+});
+app.get("/api/oauth", (req, res) => {
+  res.send("Welcome to the WelderFind API OAuth!");
+});
+app.get("/api/auth/login", (req, res) => {
+  res.send("Welcome to the WelderFind API Login!");
+});
+app.get("/api/auth/register", (req, res) => {
+  res.send("Welcome to the WelderFind API Registration!");
+});
+
 // Start the server
 const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 5000
 app.listen(PORT, () => {
