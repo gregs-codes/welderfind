@@ -52,7 +52,6 @@ const handleSubmit = async (e) => {
     alert("An unexpected error occurred. Please try again.");
   }
 };
-
 const handleGoogleLoginSuccess = (credentialResponse) => {
   console.log("Google Login Successful:", credentialResponse);
   fetch(`${API_BASE_URL}/api/oauth/google`, {

@@ -10,9 +10,9 @@ const app = express();
 // Middleware
 const allowedOrigins = [
   "http://localhost:3000", // Localhost for development
-  "https://ibetterweld.com", // Production frontend
+  process.env.FRONTEND_URL, // Production frontend
+  process.env.BACKEND_URL, // Production backend
 ];
-
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -48,5 +48,5 @@ app.get("/test", (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 5000
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on ${process.env.BACKEND_URL || `http://localhost:${PORT}`}`);
 });
