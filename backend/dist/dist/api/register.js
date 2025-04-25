@@ -394,17 +394,17 @@ var router = express.Router(); // Define the router
 
 router.post("/register", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var _req$body, name, email, password, _yield$db$query, _yield$db$query2, rows, hashedPassword;
+    var _req$body, firstName, lastName, email, password, _yield$db$query, _yield$db$query2, rows, hashedPassword;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _req$body = req.body, name = _req$body.name, email = _req$body.email, password = _req$body.password;
-          if (!(!name || !email || !password)) {
+          _req$body = req.body, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email, password = _req$body.password; // Validate required fields
+          if (!(!firstName || !lastName || !email || !password)) {
             _context.next = 3;
             break;
           }
           return _context.abrupt("return", res.status(400).json({
-            error: "Name, email, and password are required"
+            error: "First name, last name, email, and password are required"
           }));
         case 3:
           _context.prev = 3;
@@ -427,7 +427,7 @@ router.post("/register", /*#__PURE__*/function () {
         case 13:
           hashedPassword = _context.sent;
           _context.next = 16;
-          return db.query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [name, email, hashedPassword]);
+          return db.query("INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)", [firstName, lastName, email, hashedPassword]);
         case 16:
           res.status(201).json({
             message: "User registered successfully"

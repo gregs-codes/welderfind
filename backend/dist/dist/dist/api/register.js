@@ -387,103 +387,65 @@ function _asyncToGenerator(n) {
   };
 }
 var express = require("express");
-var _require = require("google-auth-library"),
-  OAuth2Client = _require.OAuth2Client;
-var jwt = require("jsonwebtoken");
-var db = require("../../db"); // Import the database connection
-require("dotenv").config();
+var bcrypt = require("bcrypt");
+var db = require("../db"); // Import the database connection
+
 var router = express.Router(); // Define the router
 
-router.post("/google", /*#__PURE__*/function () {
+router.post("/register", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var credential, googleClient, ticket, payload, googleId, email, name, picture, user, _yield$db$query, _yield$db$query2, existingUser, _yield$db$query3, _yield$db$query4, result, token;
+    var _req$body, firstName, lastName, email, password, _yield$db$query, _yield$db$query2, rows, hashedPassword;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          credential = req.body.credential;
-          if (credential) {
-            _context.next = 4;
+          _req$body = req.body, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email, password = _req$body.password; // Validate required fields
+          if (!(!firstName || !lastName || !email || !password)) {
+            _context.next = 3;
             break;
           }
           return _context.abrupt("return", res.status(400).json({
-            error: "Google credential is required"
+            error: "First name, last name, email, and password are required"
           }));
-        case 4:
-          // Verify the Google token
-          googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-          _context.next = 7;
-          return googleClient.verifyIdToken({
-            idToken: credential,
-            audience: process.env.GOOGLE_CLIENT_ID
-          });
-        case 7:
-          ticket = _context.sent;
-          payload = ticket.getPayload();
-          googleId = payload.sub, email = payload.email, name = payload.name, picture = payload.picture; // Check if the user already exists
-          _context.next = 12;
-          return db.query("SELECT * FROM users WHERE google_id = ? OR email = ?", [googleId, email]);
-        case 12:
+        case 3:
+          _context.prev = 3;
+          _context.next = 6;
+          return db.query("SELECT * FROM users WHERE email = ?", [email]);
+        case 6:
           _yield$db$query = _context.sent;
           _yield$db$query2 = _slicedToArray(_yield$db$query, 1);
-          existingUser = _yield$db$query2[0];
-          if (!(existingUser.length > 0)) {
-            _context.next = 19;
+          rows = _yield$db$query2[0];
+          if (!(rows.length > 0)) {
+            _context.next = 11;
             break;
           }
-          user = existingUser[0];
-          _context.next = 25;
+          return _context.abrupt("return", res.status(409).json({
+            error: "User already exists"
+          }));
+        case 11:
+          _context.next = 13;
+          return bcrypt.hash(password, 10);
+        case 13:
+          hashedPassword = _context.sent;
+          _context.next = 16;
+          return db.query("INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)", [firstName, lastName, email, hashedPassword]);
+        case 16:
+          res.status(201).json({
+            message: "User registered successfully"
+          });
+          _context.next = 23;
           break;
         case 19:
-          _context.next = 21;
-          return db.query("INSERT INTO users (name, email, google_id, picture, role) VALUES (?, ?, ?, ?, ?)", [name, email, googleId, picture, "user"]);
-        case 21:
-          _yield$db$query3 = _context.sent;
-          _yield$db$query4 = _slicedToArray(_yield$db$query3, 1);
-          result = _yield$db$query4[0];
-          user = {
-            id: result.insertId,
-            name: name,
-            email: email,
-            googleId: googleId,
-            picture: picture,
-            role: "user"
-          };
-        case 25:
-          // Generate a JWT token
-          token = jwt.sign({
-            id: user.id,
-            email: user.email,
-            role: user.role
-          }, process.env.JWT_SECRET, {
-            expiresIn: "1h"
-          }); // Include user data in the response
-          res.status(200).json({
-            message: "Login successful",
-            token: token,
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              picture: user.picture,
-              // Include picture
-              role: user.role
-            }
-          });
-          _context.next = 33;
-          break;
-        case 29:
-          _context.prev = 29;
-          _context.t0 = _context["catch"](0);
-          console.error("Error in Google OAuth:", _context.t0);
+          _context.prev = 19;
+          _context.t0 = _context["catch"](3);
+          console.error("Error during registration:", _context.t0);
           res.status(500).json({
             error: "Internal server error"
           });
-        case 33:
+        case 23:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 29]]);
+    }, _callee, null, [[3, 19]]);
   }));
   return function (_x, _x2) {
     return _ref.apply(this, arguments);

@@ -8,10 +8,14 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Load user from localStorage only on the client side
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (storedUser && storedUser !== "undefined") { // Check for "undefined" as a string
+      try {
+        setUser(JSON.parse(storedUser)); // Parse only if valid JSON
+      } catch (error) {
+        console.error("Error parsing user from localStorage:", error);
+        localStorage.removeItem("user"); // Remove invalid data
+      }
     }
   }, []);
 

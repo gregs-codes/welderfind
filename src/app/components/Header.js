@@ -4,6 +4,7 @@ import { useUser } from "../context/UserContext";
 
 export default function Header({ title, description }) {
   const { user, setUser } = useUser();
+  console.log("user from context", user);
   console.log("user picture", user?.picture);
   console.log("user name", user?.name);
   console.log("user", user);
