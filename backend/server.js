@@ -46,9 +46,8 @@ app.get("/test", (req, res) => {
 });
 
 // Test database connection route
-const testDbRouter = require("./api/test-db");
-app.get("/api/test-db");
-app.use("/api/test-db", testDbRouter); // Test database connection
+const testDbRouter = require("./api/test-db"); // Adjust the path
+app.use("/api/test-db", testDbRouter);
 
 // Test routes for API
 app.get("/", (req, res) => {
