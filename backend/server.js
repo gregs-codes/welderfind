@@ -4,6 +4,7 @@ const cors = require("cors");
 const googleAuthRouter = require("./api/oauth/google");
 const registerRouter = require("./api/register");
 const loginRouter = require("./api/login");
+const testDbRouter = require("./api/test-db"); // Adjust the path if necessary
 
 const app = express();
 
@@ -46,8 +47,7 @@ app.get("/test", (req, res) => {
 });
 
 // Test database connection route
-const testDbRouter = require("./api/test-db"); // Adjust the path
-app.use("/api/test-db", testDbRouter);
+app.use("/api", testDbRouter);
 
 // Test routes for API
 app.get("/", (req, res) => {
