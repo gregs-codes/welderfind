@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require("./db"); // Adjust the path to your database connection file
+const db = require("../db"); // Adjust the path to your database connection file
 
 const router = express.Router();
 
