@@ -16,65 +16,67 @@ export default function LoginOrRegister() {
 
   const { setUser } = useUser(); // Assuming you have a UserContext
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      console.log("isLogin", isLogin);
-      console.log("Form Data:", formData);
-      const endpoint = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/register";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    console.log("isLogin", isLogin);
+    console.log("Form Data:", formData);
+    const endpoint = isLogin
+      ? `${API_BASE_URL}/api/auth/login`
+      : `${API_BASE_URL}/api/auth/register`;
 
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log(`${isLogin ? "Login" : "Registration"} Successful:`, data);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user)); // Store user data
-        setUser(data.user); // Update context with user data
-        window.location.href = "/";
-      } else {
-        console.error(`${isLogin ? "Login" : "Registration"} Error:`, data.error);
-        alert(data.error || "An error occurred.");
-      }
-    } catch (error) {
-      console.error("Error during form submission:", error);
-      alert("An unexpected error occurred. Please try again.");
-    }
-  };
-
-  const handleGoogleLoginSuccess = (credentialResponse) => {
-    console.log("Google Login Successful:", credentialResponse);
-    fetch("http://localhost:5000/api/oauth/google", {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ credential: credentialResponse.credential }),
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log(`${isLogin ? "Login" : "Registration"} Successful:`, data);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user)); // Store user data
+      setUser(data.user); // Update context with user data
+      window.location.href = "/";
+    } else {
+      console.error(`${isLogin ? "Login" : "Registration"} Error:`, data.error);
+      alert(data.error || "An error occurred.");
+    }
+  } catch (error) {
+    console.error("Error during form submission:", error);
+    alert("An unexpected error occurred. Please try again.");
+  }
+};
+
+const handleGoogleLoginSuccess = (credentialResponse) => {
+  console.log("Google Login Successful:", credentialResponse);
+  fetch(`${API_BASE_URL}/api/oauth/google`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ credential: credentialResponse.credential }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.user) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user); // Update context with user data
+        window.location.href = "/";
+      } else {
+        console.error("Google Login Error:", data.error);
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.user) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          setUser(data.user); // Update context with user data
-          window.location.href = "/";
-        } else {
-          console.error("Google Login Error:", data.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error during Google Login:", error);
-      });
-  };
+    .catch((error) => {
+      console.error("Error during Google Login:", error);
+    });
+};
 
   const handleGoogleLoginError = () => {
     console.error("Google Login Failed");
