@@ -68,20 +68,3 @@ app.get("/", (req, res) => {
 app.get("/api", (req, res) => {
   res.send("Welcome to the WelderFind API!");
 });
-app.get("/api/auth", (req, res) => {
-  res.send("Welcome to the WelderFind API Authentication!");
-});
-app.get("/api/oauth", (req, res) => {
-  res.send("Welcome to the WelderFind API OAuth!");
-});
-app.get("/api/auth/login", (req, res) => {
-  res.send("Welcome to the WelderFind API Login!");
-});
-app.get("/api/auth/register", (req, res) => {
-  res.send("Welcome to the WelderFind API Registration!");
-});
-console.log("Environment Variables:");
-console.log("PORT:", process.env.PORT);
-console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
-console.log("BACKEND_URL:", process.env.BACKEND_URL);
-console.log("NEXT_PUBLIC_API_URL:", process.env.NEXT_PUBLIC_API_URL);
