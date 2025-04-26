@@ -5,6 +5,9 @@ const googleAuthRouter = require("./api/oauth/google");
 const registerRouter = require("./api/register");
 const loginRouter = require("./api/login");
 const testDbRouter = require("./api/test-db"); // Adjust the path if necessary
+const PORT = process.env.PORT || 5000;
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`;
 
 const app = express();
 
@@ -13,7 +16,16 @@ const allowedOrigins = [
   "http://localhost:3000", // Localhost for development
   process.env.FRONTEND_URL, // Production frontend
   process.env.BACKEND_URL, // Production backend
+  process.env.NEXT_PUBLIC_API_URL, // Next.js frontend
+  process.env.NEXT_PUBLIC_BACKEND_URL, // Next.js backend
+  process.env.PRODUCTION_BACKEND_URL, // Production backend URL
+  "https://welderfind-api.onrender.com", // Render.com production URL
 ];
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on ${BACKEND_URL}`);
+});
+
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -68,9 +80,8 @@ app.get("/api/auth/login", (req, res) => {
 app.get("/api/auth/register", (req, res) => {
   res.send("Welcome to the WelderFind API Registration!");
 });
-
-// Start the server
-const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 5000
-app.listen(PORT, () => {
-  console.log(`✅ Server running on ${process.env.BACKEND_URL || `http://localhost:${PORT}`}`);
-});
+console.log("Environment Variables:");
+console.log("PORT:", process.env.PORT);
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+console.log("BACKEND_URL:", process.env.BACKEND_URL);
+console.log("NEXT_PUBLIC_API_URL:", process.env.NEXT_PUBLIC_API_URL);
