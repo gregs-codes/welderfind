@@ -16,8 +16,9 @@ router.post("/register", async (req, res) => {
 
   try {
     // Check if the user already exists
-    const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-    if (rows.length > 0) {
+    const queryCheckUser = "SELECT * FROM users WHERE email = $1";
+    const result = await db.query(queryCheckUser, [email]);
+    if (result.rows.length > 0) {
       return res.status(409).json({
         error: "User already exists",
       });
@@ -27,10 +28,14 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert the new user into the database
-    await db.query(
-      "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
-      [firstName, lastName, email, hashedPassword]
-    );
+    const queryInsertUser =
+      "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4)";
+    await db.query(queryInsertUser, [
+      firstName,
+      lastName,
+      email,
+      hashedPassword,
+    ]);
 
     res.status(201).json({
       message: "User registered successfully",
