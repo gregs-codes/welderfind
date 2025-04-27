@@ -16,7 +16,7 @@ module.exports = {
       return [
         {
           source: "/api/:path*", // Proxy all requests starting with /api
-          destination: "http://localhost:5000/api/:path*", // Redirect to backend
+          destination: "https://welderfind-api.onrender.com/api/:path*", // Redirect to backend
         },
       ];
     },
