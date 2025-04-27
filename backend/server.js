@@ -19,7 +19,6 @@ const allowedOrigins = [
   process.env.NEXT_PUBLIC_API_URL, // Next.js frontend
   process.env.NEXT_PUBLIC_BACKEND_URL, // Next.js backend
   process.env.PRODUCTION_BACKEND_URL, // Production backend URL
-  "https://welderfind-api.onrender.com", // Render.com production URL
 ];
 
 app.listen(PORT, () => {
