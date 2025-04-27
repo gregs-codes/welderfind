@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT 1");
+    const result = await db.query("SELECT 1"); // PostgreSQL returns an object
+    const rows = result.rows; // Access the rows property
     res.status(200).json({ success: true, message: "Database connection successful", rows });
   } catch (error) {
     console.error("Database connection error:", error);
