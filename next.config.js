@@ -5,6 +5,7 @@ const isProd = process.env.NODE_ENV === "production";
 module.exports = {
     images: {
       unoptimized: true,
+      domains: ["lh3.googleusercontent.com"], // Add your image domains here
     },
     distDir: "build",
     assetPrefix: isProd ? "/welderfind/" : "",

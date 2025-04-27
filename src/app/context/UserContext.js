@@ -1,15 +1,23 @@
 "use client";
 
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    // Load user from localStorage if available
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+    if (storedUser && storedUser !== "undefined") { // Check for "undefined" as a string
+      try {
+        setUser(JSON.parse(storedUser)); // Parse only if valid JSON
+      } catch (error) {
+        console.error("Error parsing user from localStorage:", error);
+        localStorage.removeItem("user"); // Remove invalid data
+      }
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

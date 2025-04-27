@@ -9,10 +9,7 @@ const router = express.Router(); // Define the router
 router.post("/google", async (req, res) => {
   try {
     const { credential } = req.body;
-    console.log("Incoming OAuth request body:", req.body);
-    console.log("Credential:", credential);
-    // Check if the credential is provided
-    
+
     if (!credential) {
       return res.status(400).json({ error: "Google credential is required" });
     }
@@ -29,20 +26,23 @@ router.post("/google", async (req, res) => {
 
     // Check if the user already exists
     let user;
-    const [existingUser] = await db.query(
-      "SELECT * FROM users WHERE google_id = ? OR email = ?",
-      [googleId, email]
-    );
+    const queryCheckUser = "SELECT * FROM users WHERE google_id = $1 OR email = $2";
+    const result = await db.query(queryCheckUser, [googleId, email]);
 
-    if (existingUser.length > 0) {
-      user = existingUser[0];
+    if (result.rows.length > 0) {
+      user = result.rows[0];
     } else {
       // Create a new user
-      const [result] = await db.query(
-        "INSERT INTO users (name, email, google_id, picture, role) VALUES (?, ?, ?, ?, ?)",
-        [name, email, googleId, picture, "user"]
-      );
-      user = { id: result.insertId, name, email, googleId, picture, role: "user" };
+      const queryInsertUser =
+        "INSERT INTO users (name, email, google_id, picture, role) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+      const insertResult = await db.query(queryInsertUser, [
+        name,
+        email,
+        googleId,
+        picture,
+        "user",
+      ]);
+      user = insertResult.rows[0];
     }
 
     // Generate a JWT token
@@ -52,7 +52,18 @@ router.post("/google", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ message: "Login successful", token });
+    // Include user data in the response
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        picture: user.picture, // Include picture
+        role: user.role,
+      },
+    });
   } catch (error) {
     console.error("Error in Google OAuth:", error);
     res.status(500).json({ error: "Internal server error" });

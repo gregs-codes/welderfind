@@ -1,0 +1,13 @@
+mysql:
+  host: ibetterweld.com
+  port: 3306
+  username: admin_welder
+  password: 2025WeldIt2025!
+  database: betterweld
+
+postgres:
+  host: your-postgres-host.render.com
+  port: 5432
+  username: admin5678
+  password: DRBrRkGfKFS5CxgJ5Pti4spod8zHUGWi
+  database: fixit5678
