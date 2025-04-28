@@ -2,7 +2,7 @@
 
 import Header from "../components/Header";
 import Image from "next/image";
-const basePath = process.env.NODE_ENV === "production" ? "/" : "";
+const basePath = process.env.NODE_ENV === "production" ? "" : "";
 export default function Store() {
   const products = [
     {
